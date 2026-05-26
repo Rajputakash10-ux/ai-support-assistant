@@ -1,0 +1,22 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.positive { color: var(--positive); border-color: var(--positive); }
+.negative { color: var(--negative); border-color: var(--negative); }
+.neutral  { color: var(--neutral);  border-color: var(--neutral); }
+.urgent   { color: var(--urgent);   border-color: var(--urgent); }

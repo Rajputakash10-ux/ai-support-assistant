@@ -1,0 +1,122 @@
+{
+  "intents": [
+    {
+      "intent": "payment_issue",
+      "examples": [
+        "my payment failed",
+        "money deducted but order not placed",
+        "transaction failed but amount got deducted",
+        "payment not successful",
+        "charged twice for one order",
+        "double payment deducted",
+        "money got deducted but recharge failed",
+        "payment declined",
+        "unable to complete payment",
+        "my card was charged but booking failed"
+      ],
+      "response": "We detected a payment issue on your account. If money was deducted, it will be automatically reversed within 5-7 business days. Please share your transaction ID for faster resolution."
+    },
+    {
+      "intent": "refund_query",
+      "examples": [
+        "when will I get my refund",
+        "refund not received",
+        "I want a refund",
+        "how long does refund take",
+        "refund status",
+        "my refund is pending",
+        "refund not credited to account",
+        "I cancelled my order where is my money",
+        "refund processing time",
+        "money not returned after cancellation"
+      ],
+      "response": "Refunds are typically processed within 5-7 business days after approval. If it has been more than 7 days, please contact your bank with the refund reference number we emailed you."
+    },
+    {
+      "intent": "account_access",
+      "examples": [
+        "I cannot login to my account",
+        "forgot my password",
+        "account locked",
+        "unable to access my account",
+        "login not working",
+        "reset my password",
+        "account suspended",
+        "two factor authentication not working",
+        "OTP not received",
+        "my account has been hacked"
+      ],
+      "response": "For account access issues, please use the 'Forgot Password' option on the login page. If your account is locked or compromised, contact our security team immediately at security@support.com."
+    },
+    {
+      "intent": "order_tracking",
+      "examples": [
+        "where is my order",
+        "track my order",
+        "order not delivered",
+        "when will my order arrive",
+        "order status",
+        "my package is delayed",
+        "shipment tracking",
+        "order dispatched but not received",
+        "delivery status",
+        "estimated delivery time"
+      ],
+      "response": "You can track your order in real-time from the 'My Orders' section. If your order is delayed beyond the estimated date, we will initiate an investigation and update you within 24 hours."
+    },
+    {
+      "intent": "technical_problem",
+      "examples": [
+        "app is not working",
+        "website is down",
+        "getting error on checkout",
+        "app keeps crashing",
+        "page not loading",
+        "error 500 on your website",
+        "cannot upload documents",
+        "video not playing",
+        "app freezes on startup",
+        "technical issue with the platform"
+      ],
+      "response": "We apologize for the technical inconvenience. Our engineering team has been notified. Please try clearing your cache and restarting the app. If the issue persists, share a screenshot at tech@support.com."
+    },
+    {
+      "intent": "general_inquiry",
+      "examples": [
+        "what are your working hours",
+        "how can I contact support",
+        "do you have a phone number",
+        "what services do you offer",
+        "how does this work",
+        "tell me about your plans",
+        "pricing information",
+        "is there a free trial",
+        "how do I get started",
+        "what is your cancellation policy"
+      ],
+      "response": "Our support team is available 24/7 via chat and email. For phone support, call 1-800-SUPPORT between 9 AM - 6 PM EST. Visit our Help Center at help.support.com for detailed guides."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How do I reset my password?",
+      "answer": "Go to the login page, click 'Forgot Password', enter your registered email, and follow the reset link sent to your inbox."
+    },
+    {
+      "question": "What payment methods do you accept?",
+      "answer": "We accept all major credit/debit cards, UPI, net banking, and digital wallets like PayPal and Google Pay."
+    },
+    {
+      "question": "How long does delivery take?",
+      "answer": "Standard delivery takes 5-7 business days. Express delivery is available within 2-3 business days at an additional charge."
+    },
+    {
+      "question": "Can I cancel my order?",
+      "answer": "Orders can be cancelled within 24 hours of placement. After dispatch, cancellation is not possible but you can initiate a return."
+    },
+    {
+      "question": "Is my payment information secure?",
+      "answer": "Yes, we use 256-bit SSL encryption and are PCI-DSS compliant. We never store your full card details on our servers."
+    }
+  ]
+}
