@@ -18,8 +18,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-# Always ensure NLTK data is present (safe to call even if already downloaded)
-for resource in ["punkt_tab", "stopwords", "wordnet", "omw-1.4"]:
+# Always ensure NLTK data is present
+for resource in ["punkt", "punkt_tab", "stopwords", "wordnet", "omw-1.4"]:
     nltk.download(resource, quiet=True)
 
 # Load spaCy model for advanced NLP (POS tagging, NER)
@@ -56,8 +56,12 @@ def tokenize(text: str) -> list[str]:
     Step 2 — Tokenization
     Why: Splits sentence into individual units (tokens) for analysis.
     "payment failed" → ["payment", "failed"]
+    Uses regex split as fallback — no punkt dependency needed.
     """
-    return word_tokenize(text)
+    try:
+        return word_tokenize(text)
+    except LookupError:
+        return re.findall(r"\b\w+(?:'\w+)?\b", text)
 
 
 def remove_stopwords(tokens: list[str]) -> list[str]:

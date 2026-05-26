@@ -10,6 +10,7 @@ pip install https://github.com/explosion/spacy-models/releases/download/en_core_
 echo "=== Downloading NLTK data ==="
 python3 -c "
 import nltk
+nltk.download('punkt', quiet=False)
 nltk.download('punkt_tab', quiet=False)
 nltk.download('stopwords', quiet=False)
 nltk.download('wordnet', quiet=False)
