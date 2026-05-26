@@ -22,17 +22,12 @@ router = APIRouter()
 @router.get("/health", response_model=HealthResponse, tags=["System"])
 async def health_check():
     """Liveness probe — used by load balancers and deployment platforms."""
-    try:
-        # Lightweight check: verify model files are loadable
-        predict_intent("test")
-        models_loaded = True
-    except Exception:
-        models_loaded = False
-
+    from pathlib import Path
+    model_exists = Path("backend/models/saved/intent_classifier.pkl").exists()
     return HealthResponse(
-        status="healthy" if models_loaded else "degraded",
+        status="healthy",
         version="1.0.0",
-        models_loaded=models_loaded,
+        models_loaded=model_exists,
     )
 
 
