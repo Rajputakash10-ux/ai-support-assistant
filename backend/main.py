@@ -19,27 +19,17 @@ load_dotenv()
 
 from backend.api.routes import router
 from backend.services.intent_service import _load_model
-from backend.services.semantic_service import _load_semantic_index
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Warm up ML models at startup. Errors are caught so the server
-    still starts even if a model fails to load.
-    """
-    print("🚀 Warming up NLP models...")
+    print("🚀 Server starting...")
     try:
         _load_model()
         print("✅ Intent classifier loaded.")
     except Exception as e:
-        print(f"⚠️ Intent classifier failed to load: {e}")
-    try:
-        _load_semantic_index()
-        print("✅ Semantic index loaded.")
-    except Exception as e:
-        print(f"⚠️ Semantic index failed to load: {e}")
-    print("✅ Server ready.")
+        print(f"⚠️ Intent classifier failed: {e}")
+    print("✅ Server ready. Semantic index loads on first request.")
     yield
     print("🛑 Shutting down.")
 
