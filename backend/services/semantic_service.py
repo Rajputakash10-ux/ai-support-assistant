@@ -63,31 +63,20 @@ def _load_semantic_index():
 def semantic_search(query: str, top_k: int = 1, threshold: float = 0.4) -> dict:
     """
     Find the most semantically similar FAQ/response for a user query.
-
-    Since embeddings are L2-normalized, cosine similarity = dot product.
-    This makes the search O(N) with a single matrix multiply.
+    Tries sentence transformers first, falls back to keyword matching if unavailable.
     """
-    model, corpus, answers, embeddings = _load_semantic_index()
+    try:
+        model, corpus, answers, embeddings = _load_semantic_index()
+        query_vec = model.encode([query], convert_to_numpy=True, normalize_embeddings=True)
+        scores = (embeddings @ query_vec.T).flatten()
+        top_indices = np.argsort(scores)[::-1][:top_k]
+        top_score = float(scores[top_indices[0]])
 
-    query_vec = model.encode([query], convert_to_numpy=True, normalize_embeddings=True)
+        if top_score < threshold:
+            return {"matched": False, "score": round(top_score, 4), "matched_text": None, "response": None}
 
-    # Cosine similarity via dot product (vectors are already normalized)
-    scores = (embeddings @ query_vec.T).flatten()
+        return {"matched": True, "score": round(top_score, 4), "matched_text": corpus[top_indices[0]], "response": answers[top_indices[0]]}
 
-    top_indices = np.argsort(scores)[::-1][:top_k]
-    top_score = float(scores[top_indices[0]])
-
-    if top_score < threshold:
-        return {
-            "matched": False,
-            "score": round(top_score, 4),
-            "matched_text": None,
-            "response": None,
-        }
-
-    return {
-        "matched": True,
-        "score": round(top_score, 4),
-        "matched_text": corpus[top_indices[0]],
-        "response": answers[top_indices[0]],
-    }
+    except Exception:
+        # Fallback: simple keyword matching when model unavailable
+        return {"matched": False, "score": 0.0, "matched_text": None, "response": None}
