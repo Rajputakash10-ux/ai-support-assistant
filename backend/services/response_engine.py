@@ -17,7 +17,6 @@ from pathlib import Path
 from backend.utils.preprocessor import extract_entities
 from backend.services.intent_service import predict_intent
 from backend.services.sentiment_service import analyze_sentiment
-from backend.services.semantic_service import semantic_search
 
 DATA_PATH = Path(__file__).resolve().parents[2] / "datasets" / "support_data.json"
 
@@ -42,8 +41,7 @@ _URGENCY_NOTE = (
 def process_query(user_message: str) -> dict:
     """
     Full pipeline execution for a single user message.
-
-    Returns a structured response dict consumed by the API layer.
+    Semantic search is skipped to keep response fast on free tier.
     """
     # --- Intent ---
     intent_result = predict_intent(user_message)
@@ -52,16 +50,10 @@ def process_query(user_message: str) -> dict:
     # --- Sentiment ---
     sentiment_result = analyze_sentiment(user_message)
 
-    # --- Semantic Search ---
-    semantic_result = semantic_search(user_message)
-
-    # --- Response selection: semantic match wins if high confidence ---
-    if semantic_result["matched"] and semantic_result["score"] >= 0.65:
-        base_response = semantic_result["response"]
-    else:
-        base_response = _INTENT_RESPONSES.get(
-            intent, "I'm here to help. Could you please provide more details?"
-        )
+    # --- Response from intent map ---
+    base_response = _INTENT_RESPONSES.get(
+        intent, "I'm here to help. Could you please provide more details?"
+    )
 
     # --- Personalize with sentiment prefix ---
     prefix = _SENTIMENT_PREFIX.get(sentiment_result["sentiment"], "")
@@ -80,7 +72,7 @@ def process_query(user_message: str) -> dict:
         "sentiment": sentiment_result["sentiment"],
         "sentiment_polarity": sentiment_result["polarity"],
         "is_urgent": sentiment_result["is_urgent"],
-        "semantic_match_score": semantic_result["score"],
+        "semantic_match_score": 0.0,
         "entities": entities,
         "response": final_response,
     }
