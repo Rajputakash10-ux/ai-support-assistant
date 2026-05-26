@@ -19,7 +19,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from backend.api.routes import router
-from backend.services.intent_service import _load_model
 
 
 @asynccontextmanager
