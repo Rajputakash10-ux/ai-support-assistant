@@ -36,12 +36,11 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS — allow React dev server and production frontend
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+# CORS — allow all origins for portfolio/demo deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
