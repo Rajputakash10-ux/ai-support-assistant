@@ -18,16 +18,9 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-# Download required NLTK data on first run
-for resource, path in [
-    ("punkt_tab",  "tokenizers/punkt_tab"),
-    ("stopwords",  "corpora/stopwords"),
-    ("wordnet",    "corpora/wordnet"),
-]:
-    try:
-        nltk.data.find(path)
-    except (LookupError, OSError):
-        nltk.download(resource, quiet=True)
+# Always ensure NLTK data is present (safe to call even if already downloaded)
+for resource in ["punkt_tab", "stopwords", "wordnet", "omw-1.4"]:
+    nltk.download(resource, quiet=True)
 
 # Load spaCy model for advanced NLP (POS tagging, NER)
 try:
