@@ -25,13 +25,21 @@ from backend.services.semantic_service import _load_semantic_index
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Warm up all ML models at startup so the first user request is fast.
-    Models are cached via @lru_cache — loaded once, reused forever.
+    Warm up ML models at startup. Errors are caught so the server
+    still starts even if a model fails to load.
     """
     print("🚀 Warming up NLP models...")
-    _load_model()           # Intent classifier
-    _load_semantic_index()  # Sentence embeddings
-    print("✅ All models loaded and ready.")
+    try:
+        _load_model()
+        print("✅ Intent classifier loaded.")
+    except Exception as e:
+        print(f"⚠️ Intent classifier failed to load: {e}")
+    try:
+        _load_semantic_index()
+        print("✅ Semantic index loaded.")
+    except Exception as e:
+        print(f"⚠️ Semantic index failed to load: {e}")
+    print("✅ Server ready.")
     yield
     print("🛑 Shutting down.")
 
