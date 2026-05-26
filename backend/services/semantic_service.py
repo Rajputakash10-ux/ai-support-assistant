@@ -22,7 +22,7 @@ import json
 import numpy as np
 from pathlib import Path
 from functools import lru_cache
-from sentence_transformers import SentenceTransformer
+# SentenceTransformer imported lazily to avoid OOM on Render free tier startup
 
 DATA_PATH = Path(__file__).resolve().parents[2] / "datasets" / "support_data.json"
 
@@ -36,6 +36,7 @@ def _load_semantic_index():
     Build the semantic index once at startup.
     Returns: model, FAQ questions list, FAQ answers list, embedding matrix.
     """
+    from sentence_transformers import SentenceTransformer
     model = SentenceTransformer(_MODEL_NAME)
 
     with open(DATA_PATH) as f:
