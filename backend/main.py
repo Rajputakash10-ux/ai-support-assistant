@@ -32,7 +32,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title=os.getenv("APP_NAME", "AI Support Assistant"),
     version=os.getenv("APP_VERSION", "1.0.0"),
-    description="AI-powered intelligent customer support backend with intent detection, sentiment analysis, and semantic search.",
+    description="AI-powered intelligent customer support backend v2.",
     lifespan=lifespan,
 )
 
