@@ -24,21 +24,9 @@ from backend.services.intent_service import _load_model
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("🚀 Server starting...")
-    # Train model if not present (Render free tier doesn't persist build files)
-    model_path = Path("backend/models/saved/intent_classifier.pkl")
-    if not model_path.exists():
-        print("⚙️ Model not found, training now...")
-        import subprocess, sys
-        subprocess.run([sys.executable, "-m", "backend.training.train_intent"], check=True)
-    try:
-        _load_model()
-        print("✅ Intent classifier loaded.")
-    except Exception as e:
-        print(f"⚠️ Intent classifier failed: {e}")
-    print("✅ Server ready.")
+    print("Server starting...")
     yield
-    print("🛑 Shutting down.")
+    print("Shutting down.")
 
 
 app = FastAPI(

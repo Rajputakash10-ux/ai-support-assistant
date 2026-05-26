@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "=== Installing Python dependencies ==="
+echo "=== Installing dependencies ==="
 pip install -r requirements.txt
 
 echo "=== Installing spaCy model ==="
@@ -10,14 +10,11 @@ pip install https://github.com/explosion/spacy-models/releases/download/en_core_
 echo "=== Downloading NLTK data ==="
 python3 -c "
 import nltk
-nltk.download('punkt', quiet=False)
-nltk.download('punkt_tab', quiet=False)
-nltk.download('stopwords', quiet=False)
-nltk.download('wordnet', quiet=False)
-nltk.download('omw-1.4', quiet=False)
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
+nltk.download('stopwords', quiet=True)
+nltk.download('wordnet', quiet=True)
+nltk.download('omw-1.4', quiet=True)
 "
-
-echo "=== Training intent classifier ==="
-python3 -m backend.training.train_intent
 
 echo "=== Build complete ==="

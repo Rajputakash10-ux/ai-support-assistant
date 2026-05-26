@@ -11,8 +11,8 @@ build/
 # Environment
 .env
 
-# Saved ML models (trained on Render at build time)
-backend/models/saved/
+# Keep model files tracked in git so Render doesn't need to train
+# backend/models/saved/
 
 # Jupyter
 .ipynb_checkpoints/
